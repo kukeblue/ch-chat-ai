@@ -254,7 +254,7 @@ function ChatPage() {
                             return <div key={item.dateTime}>
                                 {item.requestOptions &&
                                     <div className='talk-item'>
-                                        <img src="https://raw.githubusercontent.com/Chanzhaoyu/chatgpt-web/main/src/assets/avatar.jpg" className='talk-item-head' />
+                                        <img src="https://upload.cyuandao.com/2023060722220917115.jpg" className='talk-item-head' />
                                         <div className='chat-info'>
                                             <div className='talk-time'>{item.dateTime}</div>
                                             <div className='talk-content'>{item.requestOptions.prompt}</div>
@@ -271,7 +271,6 @@ function ChatPage() {
                         })
                     }
                     <div style={{ height: 100 }}></div>
-
                 </div>
                 <div className='input-box'>
                     <div className='input-item'>

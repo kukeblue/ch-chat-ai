@@ -1,4 +1,5 @@
 import express from 'express'
+import history from 'connect-history-api-fallback';
 import type { RequestProps } from './types'
 import type { ChatMessage } from './chatgpt'
 import { chatConfig, chatReplyProcess, currentModel } from './chatgpt'
@@ -7,6 +8,7 @@ import { limiter } from './middleware/limiter'
 import { isNotEmptyString } from './utils/is'
 
 const app = express()
+app.use('/',history())
 const router = express.Router()
 
 app.use(express.static('public'))
