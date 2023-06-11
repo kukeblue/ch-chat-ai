@@ -26,10 +26,11 @@ export default defineConfig({
     open: false,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:3002/',
+        target: 'http://47.106.217.43:3002/',
         changeOrigin: true, // 允许跨域
-        rewrite: path => path.replace('/api/', '/'),
+        rewrite: path => path.replace('/api/', '/api/'),
       },
     },
+   
   },
 })

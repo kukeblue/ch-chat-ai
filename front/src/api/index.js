@@ -3,7 +3,7 @@ import useAuthStore from '@/store/authStore'
 import useSettingStore from '@/store/settingStore'
 
 
-export function fetchChatAPIProcess(params) {
+export function fetchapiProcess(params) {
     const settingStore = useSettingStore.getState()
     const authStore = useAuthStore.getState()
 
@@ -32,5 +32,14 @@ export function fetchChatAPIProcess(params) {
 export function fetchSession() {
     return post({
         url: '/api/session',
+    })
+}
+
+export function loginWx(code) {
+    return post({
+        url: '/api/wechat/authorization',
+        data: {
+            "code": code
+        }
     })
 }

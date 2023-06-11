@@ -8,7 +8,7 @@ function http(
     const successHandler = (res) => {
         // const authStore = useAuthStore()
 
-        if (res.data.status === 'Success' || typeof res.data === 'string')
+        if (res.data.code == 0 || res.data.status === 'Success' || typeof res.data === 'string')
             return res.data
 
         if (res.data.status === 'Unauthorized') {

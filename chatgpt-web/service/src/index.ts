@@ -6,9 +6,11 @@ import { chatConfig, chatReplyProcess, currentModel } from './chatgpt'
 import { auth } from './middleware/auth'
 import { limiter } from './middleware/limiter'
 import { isNotEmptyString } from './utils/is'
+import request from 'request-promise';
+
 
 const app = express()
-app.use('/',history())
+app.use('/', history())
 const router = express.Router()
 
 app.use(express.static('public'))
@@ -45,6 +47,21 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
   finally {
     res.end()
   }
+})
+
+router.post('/wechat/authorization', async (req, res) => {
+  var options = {
+    'method': 'POST',
+    'url': 'http://47.106.217.43:8090/wechat/authorization',
+    'headers': {
+      'token': '',
+      'Content-Type': 'application/json; charset=UTF-8'
+    },
+    body: JSON.stringify(req.body)
+  };
+  const response = await request(options);
+
+  res.send(response)
 })
 
 router.post('/config', auth, async (req, res) => {

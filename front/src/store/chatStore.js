@@ -105,6 +105,17 @@ const useChatStore = create(persist((set, get) => (
       return Object.assign({}, state)
     }),
 
+    updateChatSomeByUuid: (uuid, index, chat)=>set((state) => {
+      const chatIndex = state.chat.findIndex(item => item.uuid == uuid)
+      console.log(uuid, chatIndex)
+      let len = state.chat[chatIndex].data.length
+      if (chatIndex !== -1) {
+        state.chat[chatIndex].data[len - 1] = { ...state.chat[chatIndex].data[len - 1], ...chat }
+      }
+      console.log('updateChatSomeByUuid --->', state)
+      return Object.assign({}, state)
+    }),
+
     deleteChatByUuid: (uuid) => set((state) => {
       if (!uuid || uuid === 0) {
         if (this.chat.length) {

@@ -4,21 +4,28 @@
     overflow-y: auto;
 }
 
+p {
+    margin: 0px !important;
+}
+
 .chat-page {
     width: 100%;
     height: calc(100vh - 50px);
     position: relative;
     overflow: hidden;
 }
+
 .talk-item {
     padding-top: 20px;
     display: flex;
     flex-direction: row-reverse;
-    
+
 }
+
 .chat-info {
     text-align: right;
 }
+
 .talk-time {
     margin-top: 10px;
     color: rgb(180 187 196);
@@ -27,19 +34,35 @@
     text-align: right;
     margin-bottom: 5px;
 }
+
 .talk-content {
     padding: 8px;
     background-color: rgb(210, 249, 209);
     border-radius: 5px;
     display: inline-block;
+    max-width: calc(100vw - 100px);
+    overflow: auto;
 
 }
+
 .talk-item-head {
     width: 36px;
     height: 36px;
     border-radius: 50%;
     margin: 13px;
 }
+
+.head-chat-title {
+    width: 200px;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-align: center;
+    -webkit-line-clamp: 1;
+}
+
 .chat-page-head {
     flex-shrink: 0;
     background-color: #000;
@@ -51,9 +74,10 @@
     position: relative;
     z-index: 999;
     color: #fff;
-    font-size: 13px;
+    font-size: 14px;
 
 }
+
 .chat-page-head-plus {
     width: 14px;
     height: 14px;
@@ -66,14 +90,19 @@
 }
 
 .new-chat-icon {
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+
     img {
         margin-right: 5px;
     }
 }
+
 .input-box {
+    box-sizing: border-box;
+    width: 100%;
     position: absolute;
     flex-shrink: 0;
     left: 0;
@@ -88,6 +117,7 @@
     bottom: 0px;
     // background-color: rebeccapurple;
 }
+
 .input-item {
     flex: 1;
     margin-right: 14px;
@@ -130,15 +160,27 @@
     display: none;
 }
 
+.wmde-markdown {
+    background-color: #e5e7eb !important;
+}
+
+code {
+    margin: 20px 0px !important;
+}
+
 .robot-chat-item {
     flex-direction: row;
+
     .chat-info {
         text-align: left;
     }
+
     .talk-content {
-       background-color: #e5e7eb;
-       margin: 0 10px;
-       margin-top: 15px;
+        background-color: #e5e7eb;
+        margin: 0 10px;
+        margin-top: 15px;
+        margin-left: 0px !important;
+        margin-right: 25px;
     }
 }
 
@@ -152,10 +194,12 @@
     position: relative;
     flex: 1;
 }
+
 .chat-check-list {
     height: 100%;
     width: 220px;
     background-color: #1a1c0a;
+
     .add-chat-button {
         cursor: pointer;
         margin: 0 12px;
@@ -168,10 +212,11 @@
         margin-top: 20px;
         color: #fff;
     }
+
     .chat-old-list {
         margin: 0 12px;
         border-radius: 4px;
-       
+
         display: flex;
         align-items: center;
         justify-content: center;
@@ -179,59 +224,103 @@
         color: #fff;
         flex-direction: column;
     }
+
     .chat-old-list-item {
         padding: 10px 15px;
         border-radius: 5px;
         border: 1px solid #fff;
         margin-bottom: 20px;
-        width:80%;
+        width: 80%;
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
+
     .chat-old-list-item_unActive {
         padding: 10px 15px;
         border-radius: 5px;
         border: 1px solid #4c4d4f;
         margin-bottom: 20px;
-        width:80%;
+        width: 80%;
         display: flex;
         align-items: center;
         justify-content: space-between;
         color: #4c4d4f;
     }
+
     .chat-old-list-item-title {
         width: 100px;
+        height: 20px;
         overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        text-align: center;
+        -webkit-line-clamp: 1;
     }
+
     .chat-old-list-item-delete {
         cursor: pointer;
     }
 }
 
 
-@media screen and (max-width: 1024px) { 
+@media screen and (max-width: 1024px) {
     .chat-page-head {
         display: flex;
     }
+
     .chat-check-list {
         display: none;
     }
-    .input-box { 
+
+    .input-box {
         bottom: 60px !important;
     }
 }
+
 .ant-drawer-content-wrapper {
     width: unset !important;
 }
+
 .ant-drawer-body {
     padding: 0 !important;
     background-color: #1a1c0a;
+
     .chat-check-list {
         display: block;
     }
 }
 
+
+
 .ant-drawer-header {
     display: none !important;
+}
+
+.cursor {
+    display: inline-block;
+    width: 3px;
+    height: 16px;
+    background-color: black;
+    animation: blink 1s infinite;
+}
+.stop-button {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
