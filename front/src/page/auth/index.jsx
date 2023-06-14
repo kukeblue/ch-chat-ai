@@ -5,19 +5,18 @@ import { loginWx } from "@/api"
 import useAuthStore from '@/store/authStore'
 
 
+
 function AuthPage() {
     let [searchParams, setSearchParams] = useSearchParams()
-    const setUserInfo = useAuthStore((state) => state.setUserInfo)
-
     const code = searchParams.get("code")
+    const setToken = useAuthStore((state) => state.setToken)
     useEffect(()=>{
         if(code) {
             console.log('获取用户信息')
             loginWx(code).then(res=>{
-                setUserInfo(res.data)
-                alert(JSON.stringify(res.data))
+                console.log(res)
+                setToken(res.data)
                 location.href = "/"
-
             }).catch((error) => {
                 alert('获取信息失败')
                 // location.href = "/"

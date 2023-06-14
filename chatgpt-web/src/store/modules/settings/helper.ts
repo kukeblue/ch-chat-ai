@@ -10,7 +10,7 @@ export interface SettingsState {
 
 export function defaultSetting(): SettingsState {
   return {
-    systemMessage: '你是一个智能助手, 基于Openai的API制作的定制机器人, 可以帮助用户回答任何问题，除了政治问题。',
+    systemMessage: '你是一个智能助手, 基于Openai的API制作的定制机器人, 你的名字叫智聊，你可以帮助用户回答任何问题，除了政治问题。',
     temperature: 0.8,
     top_p: 1,
   }

@@ -6,7 +6,13 @@ import useAuthStore from '../../store/authStore'
 
 import { useParams } from "react-router-dom";
 import { fetchapiProcess } from '@/api'
-import { PlusOutlined,PauseCircleOutlined, FormOutlined, DeleteOutlined, LoadingOutlined } from '@ant-design/icons';
+import { 
+    PlayCircleOutlined,
+    PlusOutlined,
+    PauseCircleOutlined, 
+    FormOutlined,
+    DeleteOutlined, 
+    LoadingOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { Drawer, Button } from 'antd';
 import MarkdownPreview from '@uiw/react-markdown-preview';
@@ -29,7 +35,6 @@ function ChatPage() {
     const clearChatByUuid = useChatStore((state) => state.clearChatByUuid)
     const updateChatSomeByUuid = useChatStore((state) => state.updateChatSomeByUuid)
     const userInfo = useAuthStore((state) => state.userInfo)
-
     const addHistory = useChatStore((state) => state.addHistory)
     const usingContext = useChatStore((state) => state.usingContext)
     const history = useChatStore((state) => state.history)
@@ -38,11 +43,21 @@ function ChatPage() {
     const [loading, setLoading] = useState(false)
     const deviceWidth = window.innerWidth;
     const dataSources = useMemo(() => getChatByUuid(uuid), [uuid, chat])
-    console.log('debug dataSources history', dataSources, history)
     const buttonDisabled = useMemo(() => prompt != "" ? false : true, [prompt])
     const conversationList = dataSources.filter(item => (!item.inversion && !!item.conversationOptions))
-    console.log('debug conversationList active', conversationList, active)
-
+    let chatNotFinish = false
+    if(!loading && dataSources.length > 0) {
+        // item.conversationOptions ? <MarkdownPreview
+        // source={item.text}
+        // 检查最后一个字是否是句号
+        const lastChat = dataSources[dataSources.length - 1]
+        if(lastChat.conversationOptions && lastChat.text.length > 900) {
+            let lastWord = lastChat.text.slice(-1); // -1 表示倒数第一位
+            if(!["!", "?", ".", "！", "？", "。"].includes(lastWord)) {
+                chatNotFinish = true
+            }
+        }
+    }
     useEffect(()=>{
         if(!uuid && active) {
             navigate("/chat/" + active);
@@ -63,13 +78,15 @@ function ChatPage() {
         onConversation()
     }
 
+    const handleContinue = ()=>{
+        handleSubmit()
+    }
+
     const onConversation = () => {
         scrollToBottom()
         setLoading(true)
         controller = new AbortController()
-        console.log('debug onConversation')
-        let message = prompt
-
+        let message = prompt || "继续"
         // todo 等待loading
         // if (loading.value)
         //     return
@@ -91,7 +108,6 @@ function ChatPage() {
             },
         )
         try {
-            console.log('fetch chatgpt')
             let lastText = ''
             const fetchapiOnce = async () => {
                 await fetchapiProcess({
@@ -99,8 +115,8 @@ function ChatPage() {
                     options,
                     signal: controller.signal,
                     onDownloadProgress: ({ event }) => {
-                        console.log('== onDownloadProgress ==')
                         const xhr = event.target
+                       
                         const { responseText } = xhr
                         // Always process the final line
                         const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2)
@@ -109,6 +125,7 @@ function ChatPage() {
                             chunk = responseText.substring(lastIndex)
                         try {
                             const data = JSON.parse(chunk)
+                            console.log('ret:', data.text)
                             updateChatByUuid(
                                 +uuid,
                                 dataSources.length - 1,
@@ -123,16 +140,9 @@ function ChatPage() {
                                 },
                             )
                             setRandom(Math.random())
-                            // if (openLongReply && data.detail.choices[0].finish_reason === 'length') {
-                            // options.parentMessageId = data.id
-                            // lastText = data.text
-                            // message = ''
-                            // return fetchapiOnce()
-                            // }
-                            // scrollToBottomIfAtBottom()
                         }
                         catch (error) {
-                            //
+                            console.log(error)
                         }
                     }
                 })
@@ -150,7 +160,6 @@ function ChatPage() {
     }
 
     const handleAdd = () => {
-        console.log('handleAdd')
         const uuid = Date.now()
         addHistory({ title: 'New Chat', uuid:uuid, isEdit: false })
         navigate("/chat/" + uuid);
@@ -293,7 +302,10 @@ function ChatPage() {
                    
                     <div className='stop-button' > 
                     {loading && <Button icon={<PauseCircleOutlined />} type="primary" ghost onClick={()=>handleStop()}>
-                        停止响应
+                        停止生成
+                    </Button>}
+                    {chatNotFinish && <Button icon={<PlayCircleOutlined />} type="primary" ghost onClick={()=>handleContinue()}>
+                        继续生成
                     </Button>}
                     </div>
                     <div style={{ height: 200 }}></div>
@@ -301,13 +313,14 @@ function ChatPage() {
                 <div className='input-box'>
                     <div className='input-item'>
                         <Input
+                            onPressEnter={() =>!loading && !buttonDisabled && handleSubmit()}
                             value={prompt}
                             onChange={(e) => {
                                 setPrompt(e.target.value)
                             }}
                             placeholder="你想和我聊点什么" />
                     </div>
-                    <div onClick={() => handleSubmit()} className={buttonDisabled ? 'send-img-item_dis' : 'send-img-item'}>发送</div>
+                    <div onClick={() => !loading && !buttonDisabled && handleSubmit()} className={buttonDisabled ? 'send-img-item_dis' : 'send-img-item'}>发送</div>
                 </div>
             </div>
         </div>

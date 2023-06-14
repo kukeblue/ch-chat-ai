@@ -2,14 +2,22 @@ import request from './axios'
 import useAuthStore from '@/store/authStore'
 
 
+
 function http(
     { url, data, method, headers, onDownloadProgress, signal, beforeRequest, afterRequest },
 ) {
     const successHandler = (res) => {
-        // const authStore = useAuthStore()
 
         if (res.data.code == 0 || res.data.status === 'Success' || typeof res.data === 'string')
             return res.data
+
+        if(res.data.code == 401){
+            const settingStore = useAuthStore.getState()
+            settingStore.setToken("")
+            // const useAuthStore = useAuthStore()
+            // useAuthStore.setToken("")
+            return
+        }
 
         if (res.data.status === 'Unauthorized') {
             authStore.removeToken()
@@ -52,6 +60,18 @@ export function get(
 export function post(
     { url, data, method = 'POST', headers, onDownloadProgress, signal, beforeRequest, afterRequest }
 ) {
+    let token
+    try {
+        token = JSON.parse(localStorage['auth-storage']).state.token
+    }catch {
+        token = ''
+    }
+    headers = {
+        ...headers,
+        authorization: token,
+    }
+
+
     return http({
         url,
         method,

@@ -26,6 +26,7 @@ export default defineConfig({
     open: false,
     proxy: {
       '/api': {
+        // target: 'http://localhost:3002/',
         target: 'http://47.106.217.43:3002/',
         changeOrigin: true, // 允许跨域
         rewrite: path => path.replace('/api/', '/api/'),

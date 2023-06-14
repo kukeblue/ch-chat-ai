@@ -10,7 +10,7 @@ function MyPage() {
         <div className='my-content-wrap'>
             <div className='my-content'>
                 <div className='my-page-header'>
-                    <img src={userInfo.headimgurl || "https://upload.cyuandao.com/2023060722220917115.jpg"} className='my-avatar'></img>
+                    <img src={userInfo.avatar || "https://upload.cyuandao.com/2023060722220917115.jpg"} className='my-avatar'></img>
                     <div className='my-info'> 
                         <div className='my-name-line'>
                             <div className='my-name'>{userInfo.nickname || "未登录"}</div>

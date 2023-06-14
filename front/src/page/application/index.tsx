@@ -1,9 +1,111 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import './index.less'
+import {
+    applications
+} from './applications'
+const applicationTabs = ['全部', '效率', '营销', '创作', '图表', '专家', '娱乐', '企业', '电脑应用']
+
+
 
 function ApplicationPage() {
+    const navigate = useNavigate();
+    const [currentApplicationTab, setCurrentApplicationTab] = useState('全部')
+
+    const filterApplications = applications.filter(item => {
+        if (currentApplicationTab == '全部') {
+            return true
+        } else {
+            return item.key == currentApplicationTab
+        }
+    })
+
     return <div className='application-page'>
-        全速迭代中
+        <div className='application-left-tabBar-mobile'>
+            {
+                applicationTabs.map((item) => {
+                    return <div key={item}
+                        onClick={() => {
+                            setCurrentApplicationTab(item)
+                        }}
+                        className={
+                            currentApplicationTab == item ? 'application-left-tabBar-mobile-item_active' : 'application-left-tabBar-mobile-item'
+                        }
+                    >
+                        <div className='tabBar-active-line' />
+                        {item}
+                    </div>
+                })
+            }
+            {/* <div className='application-left-tabBar-mobile-item_active'>
+                <div className='tabBar-active-line'></div>
+                全部
+            </div> */}
+
+        </div>
+        <div className='application-left-tabBar'>
+            {applicationTabs.map(item => {
+                return <div key={item}
+                    onClick={() => {
+                        setCurrentApplicationTab(item)
+                    }}
+                    className={currentApplicationTab == item ? 'application-left-tabBar-item_active' : 'application-left-tabBar-item'}>
+                    {item}
+                </div>
+            })}
+        </div>
+        <div className='application-right'>
+            <div className='application-right-content'>
+                {
+                    currentApplicationTab != '全部' && <div>
+                        <div className='application-title'>{currentApplicationTab}</div>
+                        <div className='application-list'>
+                        {
+                            filterApplications.map(item => {
+                                return <div
+                                    key={item!.name}
+                                    onClick={() => {
+                                        navigate(item!.link);
+                                    }}
+                                    className='application-list-item'>
+                                    <img className='application-list-item-pic' src={item!.pic} />
+                                    <div className='application-list-item-name'>{item!.name}</div>
+                                    <div className='application-list-item-dec'>{item!.dec}</div>
+                                </div>
+                            })
+                        }
+                        </div>
+                    </div>
+                }
+                {
+                    currentApplicationTab == '全部' && applicationTabs.map(key => {
+                        
+                        return key != "全部" && <div key={key}>
+                            <div className='application-title'>{key}</div>
+                            <div className='application-list'>
+                                {
+                                    filterApplications.filter(data=>data!.key == key).map(item => {
+                                        return <div
+                                            key={item!.name}
+                                            onClick={() => {
+                                                navigate(item!.link);
+                                            }}
+                                            className='application-list-item'>
+                                            <img className='application-list-item-pic' src={item!.pic} />
+                                            <div className='application-list-item-name'>{item!.name}</div>
+                                            <div className='application-list-item-dec'>{item!.dec}</div>
+                                        </div>
+                                    })
+                                }
+
+                            </div>
+                        </div>
+                    })
+                }
+
+
+            </div>
+        </div>
     </div>
 }
 

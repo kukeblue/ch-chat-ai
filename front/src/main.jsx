@@ -8,6 +8,7 @@ import AuthWrapper from './component/AuthWrapper'
 import MyPage from './page/my/index'
 import ApplicationPage from './page/application/index'
 import CreationPage from './page/creation/index'
+import ApplictionDetailPage from './page/applictionDetail/index'
 import PicPage from './page/pic/index'
 import VipPage from './page/vip/index'
 
@@ -50,6 +51,12 @@ const router = createBrowserRouter([
                 ),
             },
             {
+                path: "/appliction-detail/:applictionKey",
+                element: (
+                    <ApplictionDetailPage />
+                ),
+            },
+            {
                 path: "/creation",
                 element: (
                     <CreationPage />
@@ -76,7 +83,7 @@ const router = createBrowserRouter([
 ]);
 
 // setupPageGuard(router)
-
+// console.log = ()=>{}
 ReactDOM.createRoot(document.getElementById('root')).render(
     // <React.StrictMode>
     <div><RouterProvider router={router} /></div>

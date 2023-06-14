@@ -22,11 +22,8 @@ const useChatStore = create(persist((set, get) => (
     }),
 
     getChatByUuid: (uuid) => {
-        console.log('debug getChatByUuid: uuid -', uuid)
-        console.log('chat', get().chat)
         let ret = null
         if (uuid) {
-            console.log('uuid is not empty', uuid)
             ret = get().chat.find(item => item.uuid == uuid)?.data ?? [] 
         }
         else {
@@ -75,7 +72,6 @@ const useChatStore = create(persist((set, get) => (
     }),
 
     updateChatByUuid: (uuid, index, chat) => set((state) => {
-      console.log('debug updateChatByUuid', uuid, index, chat)
       if (!uuid || uuid == 0) {
         if (state.chat.length) {
           state.chat[0].data[index] = chat
@@ -87,7 +83,6 @@ const useChatStore = create(persist((set, get) => (
       if (chatIndex != -1) {
         state.chat[chatIndex].data[index] = chat
       }
-      console.log('ret', state)
       return Object.assign({}, state)
     }),
 
@@ -107,12 +102,10 @@ const useChatStore = create(persist((set, get) => (
 
     updateChatSomeByUuid: (uuid, index, chat)=>set((state) => {
       const chatIndex = state.chat.findIndex(item => item.uuid == uuid)
-      console.log(uuid, chatIndex)
       let len = state.chat[chatIndex].data.length
       if (chatIndex !== -1) {
         state.chat[chatIndex].data[len - 1] = { ...state.chat[chatIndex].data[len - 1], ...chat }
       }
-      console.log('updateChatSomeByUuid --->', state)
       return Object.assign({}, state)
     }),
 

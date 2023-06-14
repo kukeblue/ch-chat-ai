@@ -4,8 +4,10 @@ import { Alert } from 'antd';
 import './DefaultLayout.less'
 import { getIsWechat } from '../utils/index'
 import useAuthStore from '@/store/authStore'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Outlet } from 'react-router-dom';
+import { getUser, getWeChatSign } from '../api/index';
+import { register } from '../utils/index'
 
 const TabPic = {
     chatActive: "https://upload.cyuandao.com/2023060414530959065.png",
@@ -36,12 +38,12 @@ function BottomTab() {
             <img src={index == 0 ? TabPic.chatActive : TabPic.chat} className='bottom-tab-item-pic' />
             <div className={index == 0 ? 'bottom-tab-item-text_active' : 'bottom-tab-item-text'} >聊天</div>
         </div>
-        <div 
+        {/* <div 
             onClick={() => navigate("/pic")}
             className='bottom-tab-item'>
             <img src={index == 1 ? TabPic.picActive : TabPic.pic} className='bottom-tab-item-pic' />
             <div className={index == 1 ? 'bottom-tab-item-text_active' : 'bottom-tab-item-text'}>绘画</div>
-        </div>
+        </div> */}
         <div 
             onClick={() => navigate("/application")}
             className='bottom-tab-item'>
@@ -115,11 +117,13 @@ function Navigation() {
                 <div className='navigation-menu-item-text'>绘画</div>
             </div>
             <div 
+            onClick={() => navigate("/application")}
             className={'navigation-menu-item ' + (navigationIndex == 2 ? 'navigation-menu-item_active' : '')}>
                 <img className='navigation-menu-item-img' src="https://olddefaultx.h5.bigbigtool.com/static/images/index-create-active.svg"></img>
                 <div className='navigation-menu-item-text'>应用</div>
             </div>
             <div 
+            onClick={() => navigate("/creation")}
             className={'navigation-menu-item ' + (navigationIndex == 3 ? 'navigation-menu-item_active' : '')}>
                 <img className='navigation-menu-item-img' src="https://olddefaultx.h5.bigbigtool.com/static/images/index-content-active.svg"></img>
                 <div className='navigation-menu-item-text'>写作</div>
@@ -140,21 +144,48 @@ function Navigation() {
     </div>
 }
 
+let notLayoutPages = ['appliction-detail']
+
 function DefaultLayout(props) {
+    const routerLocation = useLocation();
+    useEffect(() => {
+        console.log('Location changed!', location.pathname);
+    }, [routerLocation]);
     const isAuthPage = location.href.includes('auth')
     const isWechat = getIsWechat()
+    const setUser = useAuthStore((state) => state.setUser)
+    const setUserInfo = useAuthStore((state) => state.setUserInfo)
+
+    const isNotLayout = !!notLayoutPages.find(item=>location.href.includes(item))
 
     if (isWechat && !isAuthPage) {
-        const userInfo = useAuthStore((state) => state.userInfo)
-        if (!userInfo.openid) {
+        const token = useAuthStore((state) => state.token)
+        if (!token) {
             location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9376ece495c2a90a&redirect_uri=https://wap.kukechen.top/auth&response_type=code&scope=snsapi_userinfo&state=state#wechat_redirect"
             return
+        }else {
+            // 存在openid 获取用户
+            getUser().then(res=>{
+                setUser(res.data)
+                setUserInfo(res.data)
+            })
+            // 注册微信jsdk
+            getWeChatSign().then(res=> {
+                console.log('debug', res.data)
+                const config = res.data
+                register(wx, config, {
+                    title: '智聊机器人',
+                    desc: '智聊机器人',
+                    link: location.href,
+                    imgUrl: 'https://upload.cyuandao.com/_nuxt/profile_1.svg',
+                })
+            })
         }
     }
     return isAuthPage ? <div className='app-layout'> <Outlet /> </div> : <div className='app-layout'>
-        <Navigation></Navigation>
+        {!isNotLayout && <Navigation></Navigation>}
         <div className='app-layout-right'>
-            <Header></Header>
+            {!isNotLayout && <Header></Header>}
             <Outlet />
         </div>
         <BottomTab></BottomTab>

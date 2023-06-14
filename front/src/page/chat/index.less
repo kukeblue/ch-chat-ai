@@ -1,6 +1,6 @@
 .talk-wrap {
     width: 100%;
-    height: calc(100% - 110px);
+    height: calc(100% - 60px);
     overflow-y: auto;
 }
 
@@ -42,7 +42,7 @@ p {
     display: inline-block;
     max-width: calc(100vw - 100px);
     overflow: auto;
-
+    text-align: left;
 }
 
 .talk-item-head {
@@ -266,6 +266,11 @@ code {
 
 
 @media screen and (max-width: 1024px) {
+    .talk-wrap {
+        width: 100%;
+        height: calc(100% - 110px);
+        overflow-y: auto;
+    }
     .chat-page-head {
         display: flex;
     }
