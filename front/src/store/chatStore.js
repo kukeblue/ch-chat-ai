@@ -91,7 +91,7 @@ const useChatStore = create(persist((set, get) => (
         if (state.chat.length) {
           state.chat[0].data = []
         }
-        return
+        return Object.assign({}, state)
       }
       const index = state.chat.findIndex(item => item.uuid == uuid)
       if (index !== -1) {

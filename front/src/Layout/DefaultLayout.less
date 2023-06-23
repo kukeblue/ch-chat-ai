@@ -86,7 +86,22 @@ div {
     width: 80%;
     border-bottom: 1px solid #29292c;
 }
+.overtime-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 13px;
+
+}
 .vip-update-menu {
+    cursor: pointer;
     margin: 2px 12px;
     padding: 6px;
     font-size: 13px;
@@ -206,8 +221,71 @@ div {
 
 }
 
+.scan-login-modal {
+    width: 790px;
+    height: 460px;
+    display: flex;
+    // border: 1px solid red;
+}
+.login-modal .ant-modal-content {
+    padding: 0px;
+}
+.login-modal .ant-modal-header {
+    display: none;
+}
+.login-vip-fun-img {
+    width: 100%;
+    height: 100%;
+}
+.login-vip-fun {
+    width: 330px;
+    height: 460px;
+}
+.login-scan-content {
+    width: 450px;
+    height: 460px;
+}
+.login-scan-content-title {
+    display: flex;
+    font-size: 18px;
+    font-weight: 400;
+    color: #414141;
+    margin-left: 6px;
+    box-sizing: border-box;
+    justify-content: center;
+    margin-top: 50px;
+}
+.scan-img-refresh {
+    cursor: pointer;
+    color: #20b7e3;
+}
+
+.scan-warp {
+    position: relative;
+    margin: 34px 86px 14px;
+    display: flex;
+    justify-content: center;
+    border: 6px solid #dcdcdc;
+    border-radius: 10px 10px 10px 10px;
+    padding: 25px;
+}
+
+.login-scan-content-title img {
+    width: 30px;
+    height: 30px;
+}
+
+.scan-img {
+    width: 210px;
+    height: 210px;
+    background-color: rgba(0,0,0,.6);
+}
+
 .flex {
     display: flex;
+}
+.header-user-name {
+    cursor: pointer;
 }
 
 ::-webkit-scrollbar {

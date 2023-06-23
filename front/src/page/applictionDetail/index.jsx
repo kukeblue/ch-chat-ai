@@ -9,11 +9,14 @@ import MarkdownPreview from '@uiw/react-markdown-preview';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useParams } from "react-router-dom";
 import {applictionDetailConfig} from './config'
+import useAuthStore from '../../store/authStore'
+
 
 let controller = new AbortController()
 
 function ApplicationDetailPage() {
-
+    const token = useAuthStore((state) => state.token)
+    const setShowLoginModal = useAuthStore((state) => state.setShowLoginModal)
     const [prompt, setPrompt] = useState("")
     const [result, setResult] = useState("")
     const [copyText, setCopyText] = useState("复制")
@@ -36,6 +39,7 @@ function ApplicationDetailPage() {
     }
 
     const onSubmit = () => {
+
         if(!prompt || loading) {
             return
         }
@@ -70,6 +74,7 @@ function ApplicationDetailPage() {
             }, 500)
         }
         fetchapiOnce()
+        window._czc.push(["_trackEvent", '应用详情页面', '点击提交', '成功', 1]);
     }
 
     return <div className='application-detail-page'>
@@ -119,6 +124,10 @@ function ApplicationDetailPage() {
             </div>
             <Button 
             onClick={()=>{
+                // if(!token) {
+                //     setShowLoginModal(true)
+                //     return
+                // }
                 onSubmit()
             }}
             loading={loading}

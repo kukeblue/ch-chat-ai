@@ -18,7 +18,6 @@ function AuthPage() {
                 setToken(res.data)
                 location.href = "/"
             }).catch((error) => {
-                alert('获取信息失败')
                 // location.href = "/"
                 console.error(error);
             });

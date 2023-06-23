@@ -1,0 +1,43 @@
+.bing-page {
+    background-color: #f8f8f8;
+    width: 100%;
+    height: calc(100vh - 50px);
+    position: relative;
+}
+.bing-iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.bing-page-header {
+    width: 100%;
+    height: 60px;
+    background-color: #fff;
+    position: absolute;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+iframe .n-image {
+    display: none !important;
+}
+
+iframe {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+@media screen and (max-width: 1024px) {
+    .bing-page-header {
+        display: none;
+    }
+    .bing-page {
+        height: calc(100vh + 25px);
+        top: -80px;
+    }
+}

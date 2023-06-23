@@ -63,6 +63,7 @@
     justify-content: space-between;
 }
 .vip-buy-item {
+    margin-bottom: 10px;
     width: 30%;
     padding: 0 9px;
     flex-shrink: 0;
@@ -73,20 +74,28 @@
     position: relative;
     padding-bottom: 12px;
     box-sizing: border-box;
+    // border: 1px solid #f1c581!important;
 }
 
+
+
 .vip-name {
-    padding-top: 14px;
+    font-weight: 700;
+    padding-top: 8px;
     color: #744c17;
     font-size: 11px;
 }
 .vip-price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 23px;
-    padding-top: 9px;
+    padding-top: 2px;
     color: #ff5f61;
     font-weight: 800;
 }
 .vip-original-price {
+    margin-left: 2px;
     padding-top: 4px;
     color: #cd9d58;
     font-size: 10px;
@@ -95,7 +104,7 @@
 .vip-user-select {
     background: rgba(231,230,233,.5);
     border-radius: 2px 2px 2px 2px;
-    margin-top: 8px;
+    margin-top: 4px;
     font-size: 11px;
     font-weight: 400;
     color: #472a04;
@@ -103,16 +112,18 @@
     border-radius: 3px;
 }
 .vip-buy-item-lifelong {
-    border: 1px solid #f1c581!important;
+    box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.1);
     background-color: #fdf9f0;
     position: relative;
-    flex: 1;
-    margin-top: 21px;
+    margin-top: 5px;
     border-radius: 10px 10px 10px 10px;
     display: flex;
     justify-content: space-between;
     padding: 14px 11px;
     align-items: center;
+    width: 100%;
+    height: 100px;
+    box-sizing: border-box;
 }
 .recommend-item-title {
     font-size: 14px;
@@ -215,6 +226,9 @@
     margin-bottom: 10px;
 }
 
+.vip-item-selected {
+    border: 1px solid #f1c581!important;
+}
 
 @media screen and (max-width: 1024px) {
     .vip-page-wrap {

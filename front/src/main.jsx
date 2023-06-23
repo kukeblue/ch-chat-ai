@@ -6,11 +6,16 @@ import ChatPage from "./page/chat/index"
 import AuthPage from "./page/auth/index"
 import AuthWrapper from './component/AuthWrapper'
 import MyPage from './page/my/index'
+import ClearPage from './page/clear/index'
+
 import ApplicationPage from './page/application/index'
 import CreationPage from './page/creation/index'
 import ApplictionDetailPage from './page/applictionDetail/index'
 import PicPage from './page/pic/index'
 import VipPage from './page/vip/index'
+import BingPage from './page/bing/index'
+import AboutPage from './page/about/index'
+
 
 import {
     createBrowserRouter,
@@ -39,9 +44,20 @@ const router = createBrowserRouter([
                 ),
             },
             {
+                path: "/bing",
+                element: (
+                    <BingPage />
+                ),
+            },
+            {
                 path: "/pic",
                 element: (
                     <PicPage />
+                ),
+            },{
+                path: "/clear",
+                element: (
+                    <ClearPage />
                 ),
             },
             {
@@ -67,6 +83,11 @@ const router = createBrowserRouter([
                 element: (
                     <VipPage />
                 ),
+            }, {
+                path: "/about",
+                element: (
+                    <AboutPage />
+                ),
             },
             {
                 path: "/chat/:uuid?",
@@ -82,8 +103,7 @@ const router = createBrowserRouter([
     },
 ]);
 
-// setupPageGuard(router)
-// console.log = ()=>{}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     // <React.StrictMode>
     <div><RouterProvider router={router} /></div>

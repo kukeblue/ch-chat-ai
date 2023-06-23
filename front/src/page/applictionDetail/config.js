@@ -181,7 +181,7 @@ export const applictionDetailConfig = {
         ]
     }, 'traditionalChineseMedicine': {
         title: "中医医生",
-        pic: "https://upload.cyuandao.com/2023061408240315157.png",
+        pic: "https://upload.cyuandao.com/2023061408313212088.png",
         dec: "老中医帮你分析病因",
         tip: [
             '我经常动不动就拉肚子，怎么办？', 
@@ -190,7 +190,7 @@ export const applictionDetailConfig = {
         ]
     }, 'westernMedicine': {
         title: "西医医生",
-        pic: "https://upload.cyuandao.com/2023061408240315157.png",
+        pic: "https://upload.cyuandao.com/2023061408313212088.png",
         dec: "西医专家帮你分析病因",
         tip: [
             '浑身乏力，头发热，咳嗽，我这是怎么了？', 
